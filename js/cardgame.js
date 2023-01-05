@@ -12,18 +12,18 @@ let secondCard = false;
 
 //items array
 const items = [
-    { name : "Bulbasaur", image: "Bulbasaur.png"},
-    { name : "Charmander", image: "Charmander.png"},
-    { name : "Squirtle", image: "Squirtle.png"},
-    { name : "Pikachu", image: "Pikachu.png"},
-    { name : "Gastly", image: "Gastly.png"},
-    { name : "Meowth", image: "Meowth.png"},
-    { name : "Mew", image: "Mew.png"},
-    { name : "Togepi", image: "Togepi.png"},
-    { name : "Vulpix", image: "Vulpix.png"},
-    { name : "Eevee", image: "Eevee.png"},
-    { name : "Horsea", image: "Horsea.png"},
-    { name : "Dratini", image: "src/card-assets/Dratini.png"},
+    { name : "Bulbasaur", image: "/Pokedex/src/card-assets/Bulbasaur.png"},
+    { name : "Charmander", image: "/Pokedex/src/card-assets/Charmander.png"},
+    { name : "Squirtle", image: "/Pokedex/src/card-assets/Squirtle.png"},
+    { name : "Pikachu", image: "/Pokedex/src/card-assets/Pikachu.png"},
+    { name : "Gastly", image: "/Pokedex/src/card-assets/Gastly.png"},
+    { name : "Meowth", image: "/Pokedex/src/card-assets/Meowth.png"},
+    { name : "Mew", image: "/Pokedex/src/card-assets/Mew.png"},
+    { name : "Togepi", image: "/Pokedex/src/card-assets/Togepi.png"},
+    { name : "Vulpix", image: "/Pokedex/src/card-assets/Vulpix.png"},
+    { name : "Eevee", image: "/Pokedex/src/card-assets/Eevee.png"},
+    { name : "Horsea", image: "/Pokedex/src/card-assets/Horsea.png"},
+    { name : "Dratini", image: "/Pokedex/src/card-assets/Dratini.png"},
 ];
 
 //Initial Time 
@@ -78,10 +78,30 @@ const matrixGenerator = (cardValues, size = 4) => {
     //simple shuffle
     cardValues.sort(() => Math.random() - 0.5);
     for(let i=0 ; i<size*size;i++){
-    /* aqui me quede */ 
+        
 gameContainer.innerHTML += `
-<div class="card-container" data-card-value`;
-    }
+<div class="card-container" data-card-value= "${cardValues[i].name}">
+<div class="card-before">?</div>
+<div class="card-after">
+<img src="${cardValues[i].image}" class="image"/></div>
+</div>
+`; 
+}
+//Grid
+gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;
+
+//cards
+cards = document.querySelectorAll(".card-container");
+cards.forEach((card) => {
+    card.addEventListener("click", () => {
+        // if selected card is not matched yet then only run (i.e already matched card when clicked would be ignored)
+        if(!card.classList.contains("matched")){
+            //flip the clicked card
+            card.classList.add("flipped");
+
+        }
+    })
+})
 };
 
 //Initialize values and func calls
