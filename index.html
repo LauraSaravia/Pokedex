@@ -7,44 +7,53 @@
     <title>MateDex</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/type.css">
-    <script src="js/main.js" defer></script>
 </head>
 <body>
     <header>
         <nav class="nav">
             <img class="logo" src="./src/pokedex.png" alt="Logo">
             <ul class="nav-list">
-                <li class="nav-item"><button class="btn btn-header" id="see-all">See All</button></li>
-                <li class="nav-item"><button class="btn btn-header normal" id="normal">Normal</button></li>
-                <li class="nav-item"><button class="btn btn-header fire" id="fire">Fire</button></li>
-                <li class="nav-item"><button class="btn btn-header water" id="water">Water</button></li>
-                <li class="nav-item"><button class="btn btn-header grass" id="grass">Grass</button></li>
-                <li class="nav-item"><button class="btn btn-header electric" id="electric">Electric</button></li>
-                <li class="nav-item"><button class="btn btn-header ice" id="ice">Ice</button></li>
-                <li class="nav-item"><button class="btn btn-header fighting" id="fighting">Fighting</button></li>
-                <li class="nav-item"><button class="btn btn-header poison" id="poison">Poison</button></li>
-                <li class="nav-item"><button class="btn btn-header ground" id="ground">Ground</button></li>
-                <li class="nav-item"><button class="btn btn-header flying" id="flying">Flying</button></li>
-                <li class="nav-item"><button class="btn btn-header psychic" id="pychic">Psychic</button></li>
-                <li class="nav-item"><button class="btn btn-header bug" id="bug">Bug</button></li>
-                <li class="nav-item"><button class="btn btn-header rock" id="rock">Rock</button></li>
-                <li class="nav-item"><button class="btn btn-header ghost" id="ghost">Ghost</button></li>
-                <li class="nav-item"><button class="btn btn-header dark" id="dark">Dark</button></li>
-                <li class="nav-item"><button class="btn btn-header dragon" id="dragon">Dragon</button></li>
-                <li class="nav-item"><button class="btn btn-header steel" id="steel">Steel</button></li>
-                <li class="nav-item"><button class="btn btn-header fairy" id="fairy">Fairy</button></li>
+                <li><button class="btn btn-header" id="see-all">See All</button></li>
+                <li><button class="btn btn-header normal" id="normal">Normal</button></li>
+                <li><button class="btn btn-header fire" id="fire">Fire</button></li>
+                <li><button class="btn btn-header water" id="water">Water</button></li>
+                <li><button class="btn btn-header grass" id="grass">Grass</button></li>
+                <li><button class="btn btn-header electric" id="electric">Electric</button></li>
+                <li><button class="btn btn-header ice" id="ice">Ice</button></li>
+                <li><button class="btn btn-header fighting" id="fighting">Fighting</button></li>
+                <li><button class="btn btn-header poison" id="poison">Poison</button></li>
+                <li><button class="btn btn-header ground" id="ground">Ground</button></li>
+                <li><button class="btn btn-header flying" id="flying">Flying</button></li>
+                <li><button class="btn btn-header psychic" id="pychic">Psychic</button></li>
+                <li><button class="btn btn-header bug" id="bug">Bug</button></li>
+                <li><button class="btn btn-header rock" id="rock">Rock</button></li>
+                <li><button class="btn btn-header ghost" id="ghost">Ghost</button></li>
+                <li><button class="btn btn-header dark" id="dark">Dark</button></li>
+                <li><button class="btn btn-header dragon" id="dragon">Dragon</button></li>
+                <li><button class="btn btn-header steel" id="steel">Steel</button></li>
+                <li><button class="btn btn-header fairy" id="fairy">Fairy</button></li>
             </ul>
+            <form action="" onsubmit="searchPokemon(event)" class="search-bar">
+                <input type="text" name="pokemon" autocomplete="off">
+            </form>
         </nav>
     </header>
-
     <main>
-
-        <div id="all">
-            <div class="all-pokemon" id="pokemonList">
-            </div>
+        <div class="all-pokemon" id="container">
         </div>
 
-    </main>
+        <nav class="" aria-label="...">
+            <ul class="pagination">
+                <li class="page btn" id="previous">
+                    <a class="page-link" href="#" tabindex="-1" target="_parent"><<</a>
+                </li>
+                <li class="page btn" id="next">
+                    <a class="page-link" href="#" target="_parent">>></a>
+                </li>
+            </ul>
+      </nav>
     
+    </main>
+      <script src="js/main.js" defer></script>
 </body>
 </html>
