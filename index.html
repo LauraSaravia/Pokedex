@@ -10,8 +10,8 @@
 </head>
 <body>
     <header>
+        <img class="logo" src="./src/pokedex.png" alt="Logo">
         <nav class="nav">
-            <img class="logo" src="./src/pokedex.png" alt="Logo">
             <ul class="nav-list">
                 <li><button class="btn btn-header" id="see-all">See All</button></li>
                 <li><button class="btn btn-header normal" id="normal">Normal</button></li>
@@ -33,11 +33,14 @@
                 <li><button class="btn btn-header steel" id="steel">Steel</button></li>
                 <li><button class="btn btn-header fairy" id="fairy">Fairy</button></li>
             </ul>
-            <form action="" onsubmit="searchPokemon(event)" class="search-bar">
-                <input type="text" name="pokemon" autocomplete="off">
-            </form>
         </nav>
+        <button class="btn-header" id="random">RANDOM</button>
+        <a href="/card-game-index.html">POKE GAMES</a>
+        <form action="" onsubmit="searchPokemon(event)" class="search-bar">
+            <input type="text" name="pokemon" autocomplete="off">
+        </form>
     </header>
+
     <main>
         <div class="all-pokemon" id="container">
         </div>

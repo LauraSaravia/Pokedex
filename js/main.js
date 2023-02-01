@@ -1,5 +1,6 @@
-const btnHeader = document.querySelectorAll(".btn-header");
-const pokemonList = document.querySelector("#container");
+const btnHeader = document.querySelectorAll(".btn");
+const random = document.getElementById("random");
+const pokemonList = document.getElementById("container");
 
 let URL = "https://pokeapi.co/api/v2/pokemon/";
 
@@ -25,30 +26,21 @@ const typeColors = {
     default: '#0B0B0B'
 }
 
-function fetchPokemon(id) {
-  fetch(URL + `${id}`)
-    .then((res) => res.json())
-    .then((data) => {
-      renderPokemonData(data);
-    });
+const fetchPokemon = async (id) => {
+    try{
+        const fetchURL = await fetch(URL + `${id}`)
+        const resp = await fetchURL.json()
+        return renderPokemonData(resp);
+    } catch(err){
+        console.log(err);
+        renderNotFound();
+    }
 }
 
-function fetchAllPokemon(offset, limit) {
+async function fetchAllPokemon(offset, limit) {
   for (let i = offset; i <= offset + limit; i++) {
-    fetchPokemon(i);
+    await fetchPokemon(i);
   }
-}
-
-const searchPokemon = event => {
-    pokemonList.innerHTML = "";
-    event.preventDefault();
-    const {value} = event.target.pokemon;
-
-    fetch(URL + `${value.toLowerCase()}`)
-        .then(data => data.json())
-        .then(response => renderPokemonData(response))
-        .catch(err => renderNotFound(err))
-        container.classList.add("search");
 }
 
 const renderNotFound = () => {
@@ -93,26 +85,43 @@ const renderPokemonData = data => {
     `;
 
     //Render stats
-    const allStats = document.createElement("div");
-    allStats.classList.add("pokemon-stats")
+    const statCont = document.createElement("div");
+    statCont.classList.add("stats-cont");
+    const allStats = document.createElement("details");
+    allStats.classList.add("pokemon-stats");
+    allStats.style.background = `linear-gradient(70deg, ${colorTwo} -10%, ${colorOne} 50%, ${colorTwo} 150%)`;
+    allStats.innerHTML = `<summary class="pokemon-stat">STATS</summary>`;
+
     stats.forEach(stat => {
         const statElement = document.createElement("div");
         statElement.classList.add("stat");
+
         const statElementName = document.createElement("div");
         statElementName.classList.add("stat-name");
+
         const statElementAmount = document.createElement("div");
         statElementAmount.classList.add("stat-amount");
 
         statElementName.textContent = stat.stat.name.replace("special-", "SP ");
         statElementAmount.textContent = stat.base_stat;
 
-        statElement.appendChild(statElementName);
-        statElement.appendChild(statElementAmount);
-        allStats.appendChild(statElement);
+        statElement.append(statElementName);
+        statElement.append(statElementAmount);
+        statCont.append(statElement);
+        allStats.append(statCont);
     });
 
-    container.append(allStats);
-    pokemonList.append(container);
+    container.appendChild(allStats);
+    pokemonList.appendChild(container);
+}
+
+const searchPokemon = event => {
+    pokemonList.innerHTML = "";
+    event.preventDefault();
+    const {value} = (event.target.pokemon);
+
+    fetchPokemon(value.toLowerCase());
+    container.classList.add("search");
 }
 
 //Buttons
@@ -121,17 +130,19 @@ let offset = 1;
 
 previous.addEventListener("click", () => {
     container.classList.remove("search");
+    pokemonList.innerHTML = "";
+    fetchAllPokemon(offset, limit);
+
     if (offset != 1) {
         offset -= 9;
-        pokemonList.innerHTML = "";
         fetchAllPokemon(offset, limit);
     }
 });
 
 next.addEventListener("click", () => {
     container.classList.remove("search");
-    offset += 9;
     pokemonList.innerHTML = "";
+    offset += 9;
     fetchAllPokemon(offset, limit);
 });
 
@@ -141,21 +152,36 @@ btnHeader.forEach(btn => btn.addEventListener("click", (event) => {
     container.classList.remove("search");
 
     if(btnId === "see-all"){
-        pokemonList.innerHTML = "";
         fetchAllPokemon(offset, limit);
+    };
+
+    const filter = async (id) => {
+        pokemonList.innerHTML = "";
+        const fetchURL = await fetch(URL + `${id}`);
+        const resp = await fetchURL.json();
+        const types = await resp.types.map(type => type.type.name);
+
+        try{
+            if(types.some(type => type.includes(btnId))){
+                return renderPokemonData(resp);
+            }
+        } catch(err){
+            renderNotFound();
+        }
     }
 
-    for(let i = 1; i < Math.max(1100); i++){
-        fetch(URL + i)
-            .then((response) => response.json())
-            .then(data => {
+    for(let i = 1; i < Math.max(1300); i++){
+        filter(i);
+    }
+}
+));
 
-                const types = data.types.map(type => type.type.name);
-                if(types.some(type => type.includes(btnId))){
-                    renderPokemonData(data)
-                }
-            })
-        }
-    }))
+random.addEventListener("click", () => {
+    const randomInt = Math.floor(Math.random() * (1100 - 1)) + 1;
+    pokemonList.innerHTML = "";
+    container.classList.add("search");
+
+    fetchPokemon(randomInt);
+});
 
 fetchAllPokemon(offset, limit);
